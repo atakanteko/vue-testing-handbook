@@ -1,0 +1,10 @@
+<template>
+  <h1>Child Component</h1>
+</template>
+
+<script>
+export default {
+  name: 'Child',
+};
+</script>
+
