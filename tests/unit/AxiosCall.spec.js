@@ -20,5 +20,14 @@ describe("fetchUsers", () => {
             expect(axios.get).toHaveBeenCalledWith(`${BASE_URL}/users`);
             expect(result).toEqual(users);
         });
+        it('should return empty list', async function () {
+            const message = "Network Error";
+            axios.get.mockRejectedValueOnce(new Error(message));
+
+            const result = await fetchUsers()
+
+            expect(axios.get).toHaveBeenCalledWith(`${BASE_URL}/users`)
+            expect(result).toEqual([])
+        });
     })
 })
