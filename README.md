@@ -60,3 +60,47 @@ yaptığım zaman 0. indis'e ulaşırım ve
 değerini yakalamış olurum.
 
 Dolayısıyla assertion kısmında kontrolümü **['Hello World']** bu şekilde yaparım.
+
+### Stubbing Components
+Stubbing Components denilince anlamamız gereken şey bir başkasının yerine geçen kod parçasıdır.
+
+Örnek olarak A ve B componentlerini ele alalım. B component'i A componentinin child'i olsun.
+
+    Component A
+    <template>
+	    <B></B>
+    </template>
+
+B componentinin created hook'u bir API'ye istek atıyor olsun.
+
+    Component B
+    <template>
+	    <div></div>
+    </template>
+    
+    created() {
+	    //api call
+    }
+
+Test yazarken amacımızın sadece A component'i ile alakalı işlemleri yapmak olduğunu düşünelim.
+
+
+    describe("render component A", () => {
+	    it("is A component existed", () => {
+		    const wrapper = mount(A)
+		    expext(A.exists()).toBeTruthy()
+	    })
+    })
+Bu testi yazdığımızda görürüz ki B'de bulunan created hook API'ye istek atmıştır. Ama bu istediğimiz bir durum değil. Bunu engellemek için mount optionlarından stubs seçeneği kullanılır.
+
+     describe("render component A", () => {
+	    it("is A component existed", () => {
+		    const wrapper = mount(A, {
+			    stubs: {
+				    B:true
+			    }
+		    })
+		    expext(A.exists()).toBeTruthy()
+	    })
+    })
+Bu işlemi yaparak B component'i stub edilmiş olur. Yani B dahili bir vazife gören dummy bir kod parçasına dönüştürülür.
