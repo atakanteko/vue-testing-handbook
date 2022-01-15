@@ -1,10 +1,9 @@
 <template>
-  <h1>Child Component</h1>
+  <div>Child</div>
 </template>
 
 <script>
 export default {
-  name: 'Child',
-};
+  name: "Child"
+}
 </script>
-
