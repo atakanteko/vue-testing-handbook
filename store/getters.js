@@ -13,5 +13,6 @@ export default {
 
     poodlesByAge: (state, getters) => (age) => {
         return getters.poodles.filter(dog => dog.age === age)
-    }
+    },
+    getMyDogs: state => state.dogs
 }

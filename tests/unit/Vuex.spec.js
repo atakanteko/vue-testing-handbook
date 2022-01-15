@@ -58,6 +58,7 @@ describe("SET_POST", () => {
             .rejects.toThrow("API Error occurred.")
     });
     it('should return poodles', function () {
+        console.log(state)
         const actual = getters.poodles(state)
         expect(actual).toEqual([dogs[0],dogs[2]])
     });
@@ -65,6 +66,10 @@ describe("SET_POST", () => {
         const poodles = [dogs[0], dogs[2]]
         const actual = getters.poodlesByAge(state,{poodles})(1)
         expect(actual).toEqual([ dogs[0] ])
+    });
+    it('should return all dogs', function () {
+        const result = getters.getMyDogs({dogs})
+        expect(result).toEqual(dogs)
     });
 })
 
