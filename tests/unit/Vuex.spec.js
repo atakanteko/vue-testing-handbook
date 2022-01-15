@@ -1,6 +1,14 @@
 import mutations from "../../store/mutations";
 import actions from "../../store/actions";
+import getters from "../../store/getters";
 import axios from "axios";
+
+const dogs = [
+    { name: "lucky", breed: "poodle", age: 1 },
+    { name: "pochy", breed: "dalmatian", age: 2 },
+    { name: "blackie", breed: "poodle", age: 4 }
+]
+const state = {dogs}
 
 let url=''
 let body={}
@@ -31,7 +39,6 @@ describe("SET_POST", () => {
             posts: { "1": post }
         })
     });
-
     it('should authenticated a user', async function () {
         const commit = jest.fn()
         const username = "atakan"
@@ -49,6 +56,15 @@ describe("SET_POST", () => {
         mockError = true
         await expect(actions.authenticate({commit: jest.fn()}, {}))
             .rejects.toThrow("API Error occurred.")
+    });
+    it('should return poodles', function () {
+        const actual = getters.poodles(state)
+        expect(actual).toEqual([dogs[0],dogs[2]])
+    });
+    it('should return poodles by age', function () {
+        const poodles = [dogs[0], dogs[2]]
+        const actual = getters.poodlesByAge(state,{poodles})(1)
+        expect(actual).toEqual([ dogs[0] ])
     });
 })
 
